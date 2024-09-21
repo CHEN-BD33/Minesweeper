@@ -53,8 +53,8 @@ function buildBoard() {
 		}
 	}
 
-	// board[0][0].isMine = true ///step 2
-	// board[3][3].isMine = true ////step 2
+	board[0][0].isMine = true ///step 2
+	board[3][3].isMine = true ////step 2
 
 	// createMines(board ,gLevel.mines)
 	setMinesNegCount(board)
