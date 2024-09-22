@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,42 @@
     <title>Minesweeper</title>
 </head>
 <h1> Minesweeper</h1>
+
 <body onload="onInit()">
 
     <table class="board-container">
         <tbody class="board"></tbody>
     </table>
 
-<script src="main.js"></script>
-<script src="util.js"></script>
+<div class="onscreen-container"></div>
+    <div class="timer">Time</div>
+    <div class="lives">Lives:</div>
+    <div class="lives-msg"></div>
+
+    <div class="btn-container">
+        <div class="difficulty-container">
+            <p> Difficulty</p>
+
+            <button onclick="onChangeDifficulty(1)" class="btn difficulty">Beginner</button>
+            <button onclick="onChangeDifficulty(2)" class="btn difficulty">Medium</button>
+            <button onclick="onChangeDifficulty(3)" class="btn difficulty">Expert</button>
+        </div>
+        <div class="reset-smile"></div>
+
+
+    </div>
+
+
+    <div class="modal">
+        <h3 class="msg"></h3>
+        <button class="play-Again-btn" onclick="onInit()"> Play Again </button>
+    </div>
+
+
+    <script src="main.js"></script>
+    <script src="util.js"></script>
 </body>
+
 
 <footer>
     <p>&copy; 2024 Chen Ben Dan. All rights reserved.</p>
