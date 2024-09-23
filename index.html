@@ -7,36 +7,48 @@
     <link rel="stylesheet" href="style.css">
     <title>Minesweeper</title>
 </head>
-<h1> Minesweeper</h1>
 
 <body onload="onInit()">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="mountains">
+        <div class="mountain mountain1"></div>
+        <div class="mountain mountain2"></div>
+        <div class="mountain mountain3"></div>
+    </div>
+    
+    <h1> Minesweeper</h1>
+
+    <div class="btn-container">
+        <div class="difficulty-container">
+            <button onclick="onChangeDifficulty(1)" class="btn-difficulty">Beginner</button>
+            <button onclick="onChangeDifficulty(2)" class="btn-difficulty">Medium</button>
+            <button onclick="onChangeDifficulty(3)" class="btn-difficulty">Expert</button>
+        </div>
+        <div button onclick="onInit()" class="btn-smiley"></div>
+
+       <!-- <div class="hint-container">
+        <h3> Hints:</h3>
+            <button onclick="onHintClick()" class="btn-hint"></button>
+            <button onclick="onHintClick()" class="btn-hint">Medium</button>
+            <button onclick="onHintClick()" class="btn-hint">Expert</button>
+        </div> -->
+    </div>
 
     <table class="board-container">
         <tbody class="board"></tbody>
     </table>
 
-<div class="onscreen-container"></div>
-    <div class="timer">Time</div>
-    <div class="lives">Lives:</div>
+    <div class="onscreen-container"></div>
+    <div class="timer">Timer</div>
+    <div class="lives">Lives</div>
     <div class="lives-msg"></div>
 
-    <div class="btn-container">
-        <div class="difficulty-container">
-            <p> Difficulty</p>
-
-            <button onclick="onChangeDifficulty(1)" class="btn difficulty">Beginner</button>
-            <button onclick="onChangeDifficulty(2)" class="btn difficulty">Medium</button>
-            <button onclick="onChangeDifficulty(3)" class="btn difficulty">Expert</button>
-        </div>
-        <div class="reset-smile"></div>
-
-
-    </div>
 
 
     <div class="modal">
-        <h3 class="msg"></h3>
-        <button class="play-Again-btn" onclick="onInit()"> Play Again </button>
+        <h2 class="msg"></h2>
     </div>
 
 

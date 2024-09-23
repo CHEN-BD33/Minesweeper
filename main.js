@@ -3,11 +3,13 @@
 const MINE = '💣'
 const FLAG = '🚩'
 const LIVE = '🧡'
-///To change//////////////////
-const EMPTY = '0'
+const SMILEY_NORMAL = '😃'
+const SMILEY_LOSE = '😿'
+const SMILEY_WIN = '🥳'
 
 var isFirstClick
 var gTimerInterval
+
 var gBoard
 //This is an object by which the board size is set (in this case: 4x4 board and how many mines to place)
 var gLevels = [
@@ -50,7 +52,7 @@ function onInit() {
 	clearInterval(gTimerInterval)
 
 	renderLives()
-
+	renderMsgSmile(SMILEY_NORMAL)
 	closeModal()
 
 }
@@ -88,7 +90,7 @@ function renderBoard(board) {
 		strHTML += '<tr>';
 		for (var j = 0; j < board[i].length; j++) {
 			const currCell = board[i][j]
-			const className = `cell cell-${i}-${j}`;
+			const className = `cell cell-${i}-${j} ${currCell.isShown ? 'shown' : ''}`
 
 			strHTML += `<td class="${className} " 
 			onclick="onCellClicked(this, ${i}, ${j})" 
@@ -99,8 +101,6 @@ function renderBoard(board) {
 					strHTML += MINE
 				} else if (currCell.minesAroundCount > 0) {
 					strHTML += currCell.minesAroundCount
-				} else if (currCell.minesAroundCount === 0) {
-					strHTML += EMPTY
 				}
 
 			} else if (currCell.isMarked) {
@@ -175,12 +175,7 @@ function onCellClicked(elCell, i, j) {
 		handleLives()
 
 	} else {
-		gBoard[i][j].isShown = true
-		gGame.shownCount++
-
-		if (gBoard[i][j].minesAroundCount === 0) {
-			expandShown(gBoard, elCell, i, j)
-		}
+		expandShown(gBoard, i, j)
 	}
 
 	renderBoard(gBoard)
@@ -245,6 +240,9 @@ function gameOver() {
 
 	if (!gGame.isVictory) {
 		revelAllMines()
+		renderMsgSmile(SMILEY_LOSE)
+	} else {
+		renderMsgSmile(SMILEY_WIN)
 	}
 
 	const msg = gGame.isVictory ? 'YOU WON' : 'Game Over'
@@ -267,29 +265,42 @@ function revelAllMines() {
 // When user clicks a cell with no mines around, we need to open not only that cell, but also its neighbors. 
 //DONE //NOTE: start with a basic implementation that only opens the non-mine 1st degree neighbors
 //  BONUS: if you have the time later, try to work more like the real algorithm (see description at the Bonuses section below)
-function expandShown(board, elCell, i, j) {
+function expandShown(board, i, j) {
 
-	for (var row = i - 1; row <= i + 1; row++) {
-		if (row < 0 || row >= board.length) continue
+	if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) return
+	if (board[i][j].isShown || board[i][j].isMarked) return
 
-		for (var col = j - 1; col <= j + 1; col++) {
-			if (col < 0 || col >= board[row].length) continue
-			if (row === i && col === j) continue
+	board[i][j].isShown = true
+	gGame.shownCount++
 
-			if (board[row][col].isShown || board[row][col].isMarked) return
+	if (board[i][j].minesAroundCount === 0) {
 
-			board[row][col].isShown = true
-			gGame.shownCount++
-
-			if (board[row][col].minesAroundCount === 0) {
+		for (var row = i - 1; row <= i + 1; row++) {
+			for (var col = j - 1; col <= j + 1; col++) {
 				expandShown(board, row, col)
 			}
 		}
 	}
+
+	// for (var row = i - 1; row <= i + 1; row++) {
+	// 	if (row < 0 || row >= board.length) continue
+
+	// 	for (var col = j - 1; col <= j + 1; col++) {
+	// 		if (col < 0 || col >= board[row].length) continue
+	// 		if (row === i && col === j) continue
+
+	// if (board[row][col].isShown || board[row][col].isMarked) return
+
+	// 		board[row][col].isShown = true
+	// 		gGame.shownCount++
+
+	// 		if (board[row][col].minesAroundCount === 0) {
+	// 			expandShown(board, row, col)
+	// 		}
+	// 	}
+	// }
 }
 
-
-//DONE
 function onChangeDifficulty(id) {
 
 	for (var i = 0; i < gLevels.length; i++) {
@@ -303,12 +314,18 @@ function onChangeDifficulty(id) {
 	onInit()
 }
 
-
 function renderMsgHitMine() {
 	const elMsg = document.querySelector('.lives-msg')
-	const strMsg = 'You hit a MINE!!'
+	const strMsg = 'YOU HIT A MINE!!'
 	elMsg.innerText = strMsg
+
+	setTimeout(() => {
+		const elMsg = document.querySelector('.lives-msg')
+		const strMsg = ''
+		elMsg.innerText = strMsg
+	}, 1000);
 }
+
 
 function renderLives() {
 	const elLives = document.querySelector('.lives')
@@ -316,8 +333,10 @@ function renderLives() {
 	elLives.innerText = strLives
 }
 
-function renderMsgSmile() {
-
+function renderMsgSmile(smiley) {
+	const elSmiley = document.querySelector('.btn-smiley')
+	var strSmiley = smiley
+	elSmiley.innerText = strSmiley
 }
 
 
@@ -329,7 +348,6 @@ function getRandomInt(min, max) {
 	const maxFloored = Math.floor(max);
 	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 }
-
 
 function countNeighbors(i, j, board) {
 	var minesAroundCount = 0
@@ -346,7 +364,6 @@ function countNeighbors(i, j, board) {
 	return minesAroundCount
 }
 
-
 function openModal(msg) {
 	const elModal = document.querySelector('.modal')
 	const elMsg = elModal.querySelector('.msg')
@@ -361,12 +378,10 @@ function closeModal() {
 
 }
 
-
 function startTimer() {
-
 	const elTimer = document.querySelector('.timer')
 	const formattedTime = gGame.secsPassed.toString().padStart(3, '0');
-	elTimer.innerText = formattedTime
+	elTimer.innerText = 'Time: ' + formattedTime
 	gGame.secsPassed++
 
 }
