@@ -369,8 +369,8 @@ function hintExpandShown(board, i, j) {
 
 	revealedCells = []
 
-	for (let row = i - 1; row <= i + 1; row++) {
-		for (let col = j - 1; col <= j + 1; col++) {
+	for (var row = i - 1; row <= i + 1; row++) {
+		for (var col = j - 1; col <= j + 1; col++) {
 			if (row >= 0 && row < board.length && col >= 0 && col < board[0].length) {
 				if (!board[row][col].isShown) {
 					board[row][col].isShown = true
@@ -386,6 +386,7 @@ function hintExpandShown(board, i, j) {
 }
 
 function checkCellContent(board, row, col) {
+
 	var cellContent = ''
 	if (board[row][col].isMine) {
 		cellContent = MINE
