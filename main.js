@@ -56,7 +56,7 @@ function onInit() {
 	renderMsgSmile(SMILEY_NORMAL)
 
 	isHintOn = false
-	resetHints()
+	renderHints()
 
 	renderSafeClicks()
 
@@ -159,21 +159,20 @@ function onCellClicked(elCell, i, j) {
 	} else {
 		expandShown(gBoard, i, j)
 	}
-	
-	
+
 	checkGameOver()
-	
+
 }
 
 function handleFirstClick(firstLocation) {
-	
+
 	renderTimer()
 	gTimerInterval = setInterval(renderTimer, 1000)
-	
+
 	createMines(gBoard, gLevel.mines, firstLocation)
 	isFirstClick = false
 	setMinesNegCount(gBoard)
-	
+
 	console.log(gBoard)
 }
 
@@ -190,7 +189,7 @@ function handleLives() {
 function onCellMarked(event, i, j) {
 	event.preventDefault()
 	if (!gGame.isOn || gBoard[i][j].isShown) return
-	
+
 	if (!gBoard[i][j].isMarked) {
 		gBoard[i][j].isMarked = true
 		gGame.markedCount++
@@ -200,8 +199,6 @@ function onCellMarked(event, i, j) {
 		gGame.markedCount--
 		renderCell({ i, j }, '')
 	}
-	
-	checkGameOver()
 }
 
 function checkGameOver() {
@@ -209,30 +206,31 @@ function checkGameOver() {
 		gGame.isVictory = true
 		gameOver()
 	}
-	
+
 }
 
 function gameOver() {
 	gGame.isOn = false
+
 	clearInterval(gTimerInterval)
-	
+
 	if (!gGame.isVictory) {
 		revelAllMines()
 		renderMsgSmile(SMILEY_LOSE)
 	} else {
 		renderMsgSmile(SMILEY_WIN)
 	}
-	
+
 	const msg = gGame.isVictory ? 'YOU WON' : 'Game Over'
 	openModal(msg)
-	
+
 }
 
 function revelAllMines() {
-for (var i = 0; i < gBoard.length; i++) {
-	for (var j = 0; j < gBoard[0].length; j++) {
-		if (gBoard[i][j].isMine) {
-			gBoard[i][j].isShown = true
+	for (var i = 0; i < gBoard.length; i++) {
+		for (var j = 0; j < gBoard[0].length; j++) {
+			if (gBoard[i][j].isMine) {
+				gBoard[i][j].isShown = true
 				renderCell({ i, j }, MINE)
 			}
 		}
@@ -243,7 +241,7 @@ function expandShown(board, i, j) {
 
 	if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) return
 	if (board[i][j].isShown || board[i][j].isMarked) return
-	
+
 	board[i][j].isShown = true
 	gGame.shownCount++
 
@@ -283,7 +281,7 @@ function renderMsgHitMine() {
 		const elMsg = document.querySelector('.lives-msg')
 		const strMsg = ''
 		elMsg.innerText = strMsg
-	}, 1000);
+	}, 1000)
 }
 
 function renderLives() {
@@ -302,9 +300,9 @@ function renderMsgSmile(smiley) {
 // utils///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getRandomInt(min, max) {
-	const minCeiled = Math.ceil(min);
-	const maxFloored = Math.floor(max);
-	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+	const minCeiled = Math.ceil(min)
+	const maxFloored = Math.floor(max)
+	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
 }
 
 function countNeighbors(i, j, board) {
@@ -338,7 +336,7 @@ function closeModal() {
 
 function renderTimer() {
 	const elTimer = document.querySelector('.timer')
-	const formattedTime = gGame.secsPassed.toString().padStart(3, '0');
+	const formattedTime = gGame.secsPassed.toString().padStart(3, '0')
 	elTimer.innerText = 'Time: ' + formattedTime
 	gGame.secsPassed++
 
@@ -359,11 +357,12 @@ function renderCell(location, value) {
 
 //HINTS//
 function onHintClick(elHint) {
-	if (gGame.hints > 0 || !isHintOn)
+	if (gGame.hints > 0 && !isHintOn) {
 		isHintOn = true
-	gGame.hints--
-	elHint.classList.add('hint-active')
-	elHint.disabled = true
+		gGame.hints--
+		elHint.classList.add('hint-active')
+		elHint.disabled = true
+	}
 }
 
 function hintExpandShown(board, i, j) {
@@ -416,7 +415,7 @@ function hintHideShow(board) {
 	}, 1000)
 }
 
-function resetHints() {
+function renderHints() {
 	const hintButtons = document.querySelectorAll('.btn-hint')
 	for (var i = 0; i < hintButtons.length; i++) {
 		const button = hintButtons[i]
@@ -459,7 +458,7 @@ function getSafeClick() {
 			const elCell = document.querySelector(`.cell-${safeCell.i}-${safeCell.j}`)
 			elCell.style.backgroundColor = ''
 
-		}, 1000);
+		}, 1000)
 
 	}
 }
