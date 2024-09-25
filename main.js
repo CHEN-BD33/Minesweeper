@@ -15,7 +15,7 @@ var isHintOn
 var gTimerInterval
 
 var gBoard
-var gLevels = [
+const gLevels = [
 	{ id: 1, size: 4, mines: 2 },
 	{ id: 2, size: 8, mines: 14 },
 	{ id: 3, size: 12, mines: 32 },
@@ -31,7 +31,6 @@ var gGame = {
 	hints: 3,
 	safeClick: 3,
 }
-
 
 
 function onInit() {
@@ -50,7 +49,7 @@ function onInit() {
 
 	isFirstClick = true
 
-	startTimer()
+	renderTimer()
 	clearInterval(gTimerInterval)
 
 	renderLives()
@@ -64,7 +63,6 @@ function onInit() {
 	closeModal()
 
 }
-
 
 function buildBoard() {
 
@@ -92,7 +90,7 @@ function renderBoard(board) {
 	for (var i = 0; i < board.length; i++) {
 		strHTML += '<tr>';
 		for (var j = 0; j < board[i].length; j++) {
-			const currCell = board[i][j]
+
 			const className = `cell cell-${i}-${j}`
 
 			strHTML += `<td class="${className}" 
@@ -111,7 +109,7 @@ function renderBoard(board) {
 
 function createMines(board, minesNumber, firstLocation) {
 
-	var Cells = []
+	const Cells = []
 
 	for (var i = 0; i < board.length; i++) {
 		for (var j = 0; j < board[i].length; j++) {
@@ -161,21 +159,21 @@ function onCellClicked(elCell, i, j) {
 	} else {
 		expandShown(gBoard, i, j)
 	}
-
-
+	
+	
 	checkGameOver()
-
+	
 }
 
 function handleFirstClick(firstLocation) {
-
-	startTimer()
-	gTimerInterval = setInterval(startTimer, 1000)
-
+	
+	renderTimer()
+	gTimerInterval = setInterval(renderTimer, 1000)
+	
 	createMines(gBoard, gLevel.mines, firstLocation)
 	isFirstClick = false
 	setMinesNegCount(gBoard)
-
+	
 	console.log(gBoard)
 }
 
@@ -192,7 +190,7 @@ function handleLives() {
 function onCellMarked(event, i, j) {
 	event.preventDefault()
 	if (!gGame.isOn || gBoard[i][j].isShown) return
-
+	
 	if (!gBoard[i][j].isMarked) {
 		gBoard[i][j].isMarked = true
 		gGame.markedCount++
@@ -202,7 +200,7 @@ function onCellMarked(event, i, j) {
 		gGame.markedCount--
 		renderCell({ i, j }, '')
 	}
-
+	
 	checkGameOver()
 }
 
@@ -211,30 +209,30 @@ function checkGameOver() {
 		gGame.isVictory = true
 		gameOver()
 	}
-
+	
 }
 
 function gameOver() {
 	gGame.isOn = false
 	clearInterval(gTimerInterval)
-
+	
 	if (!gGame.isVictory) {
 		revelAllMines()
 		renderMsgSmile(SMILEY_LOSE)
 	} else {
 		renderMsgSmile(SMILEY_WIN)
 	}
-
+	
 	const msg = gGame.isVictory ? 'YOU WON' : 'Game Over'
 	openModal(msg)
-
+	
 }
 
 function revelAllMines() {
-	for (var i = 0; i < gBoard.length; i++) {
-		for (var j = 0; j < gBoard[0].length; j++) {
-			if (gBoard[i][j].isMine) {
-				gBoard[i][j].isShown = true
+for (var i = 0; i < gBoard.length; i++) {
+	for (var j = 0; j < gBoard[0].length; j++) {
+		if (gBoard[i][j].isMine) {
+			gBoard[i][j].isShown = true
 				renderCell({ i, j }, MINE)
 			}
 		}
@@ -245,11 +243,12 @@ function expandShown(board, i, j) {
 
 	if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) return
 	if (board[i][j].isShown || board[i][j].isMarked) return
-
+	
 	board[i][j].isShown = true
 	gGame.shownCount++
 
-	var cellContent = board[i][j].minesAroundCount || ''
+	var cellContent = board[i][j].minesAroundCount > 0 ? board[i][j].minesAroundCount : ''
+
 	renderCell({ i, j }, cellContent)
 
 	if (board[i][j].minesAroundCount === 0) {
@@ -260,24 +259,6 @@ function expandShown(board, i, j) {
 			}
 		}
 	}
-
-	// for (var row = i - 1; row <= i + 1; row++) {
-	// 	if (row < 0 || row >= board.length) continue
-
-	// 	for (var col = j - 1; col <= j + 1; col++) {
-	// 		if (col < 0 || col >= board[row].length) continue
-	// 		if (row === i && col === j) continue
-
-	// if (board[row][col].isShown || board[row][col].isMarked) return
-
-	// 		board[row][col].isShown = true
-	// 		gGame.shownCount++
-
-	// 		if (board[row][col].minesAroundCount === 0) {
-	// 			expandShown(board, row, col)
-	// 		}
-	// 	}
-	// }
 }
 
 function onChangeDifficulty(id) {
@@ -355,7 +336,7 @@ function closeModal() {
 
 }
 
-function startTimer() {
+function renderTimer() {
 	const elTimer = document.querySelector('.timer')
 	const formattedTime = gGame.secsPassed.toString().padStart(3, '0');
 	elTimer.innerText = 'Time: ' + formattedTime
@@ -444,22 +425,6 @@ function resetHints() {
 	}
 }
 
-// //BEST SCORE//
-// function saveBestScore(level, secondsScore) {
-
-// 	if (typeof (Storage) !== "undefined") {
-// 		localStorage.setItem("lastname", "Smith")
-// 	} else {
-// 		// Sorry! No Web Storage support..
-// 	}
-
-// }
-
-// function getBestScore() {
-// 	// Retrieve
-// 	document.querySelector("best-score").innerHTML = localStorage.getItem("lastname")
-// }
-
 //SAFE CLICK//
 
 function onSafeClick(elSafeClick) {
@@ -519,3 +484,14 @@ function renderSafeClicks() {
 }
 
 //MANUALLY CREATE MINE MODE//
+
+
+
+//LIGHT\DARK MODE//
+
+function toggleDarkMode() {
+	document.body.classList.toggle('dark-mode')
+	localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'))
+
+
+}
