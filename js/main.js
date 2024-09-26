@@ -213,12 +213,11 @@ function onCellMarked(event, i, j) {
 		renderCell({ i, j }, '')
 	}
 	renderRemainingMines()
-	checkGameOver()
 }
 
 function checkGameOver() {
 
-	if ((gGame.shownCount === gLevel.size ** 2 - gLevel.mines) || (gGame.markedCount === gLevel.mines)) {
+	if (gGame.shownCount === gLevel.size ** 2 - gLevel.mines) {
 		gGame.isVictory = true
 		gameOver()
 	}
@@ -286,7 +285,7 @@ function onChangeDifficulty(id) {
 
 function renderRemainingMines() {
 	const elRemainingMines = document.querySelector('.remaining-mines')
-	elRemainingMines.innerText = `Mines: ${gGame.remainingMines}`
+	elRemainingMines.innerText = `💣 ${gGame.remainingMines}`
 }
 
 function renderMsgHitMine() {
