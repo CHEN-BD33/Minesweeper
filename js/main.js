@@ -65,7 +65,6 @@ function onInit() {
 	renderSafeClicks()
 
 	isExterminatorOn = false
-
 	renderExterminator()
 
 	closeModal()
@@ -277,7 +276,13 @@ function onChangeDifficulty(id) {
 
 	for (var i = 0; i < gLevels.length; i++) {
 		if (gLevels[i].id === id) {
-			gLevel = gLevels[i]
+
+			gLevel = {
+				id: gLevels[i].id,
+				size: gLevels[i].size,
+				mines: gLevels[i].mines
+			}
+			break
 		}
 	}
 	onInit()

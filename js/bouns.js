@@ -148,7 +148,7 @@ function getMinesCells() {
 			}
 		}
 	}
-	if (!Cells.length) return null
+	if (Cells.length < 3) return null
 
 	return Cells
 }
@@ -160,9 +160,11 @@ function getRandomMines() {
 		const randomMine = getRandomInt(0, mineCells.length)
 		const cellPos = mineCells.splice(randomMine, 1)[0]
 		gBoard[cellPos.i][cellPos.j].isMine = false
-		gGame.remainingMines--
-		gLevel.mines--
+		gLevel.mines -= 1
+		gGame.remainingMines -= 1
+		renderRemainingMines()
 	}
+
 	console.log(mineCells)
 	console.log(gBoard)
 }
