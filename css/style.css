@@ -11,7 +11,6 @@ body {
     overflow-x: hidden;
 }
 
-
 h1 {
     font-family: 'Trebuchet MS', 'Arial', sans-serif;
     font-size: 3.5rem;
@@ -109,35 +108,6 @@ h1 {
     background-color: #45a049;
 }
 
-.btn-mine-exterminator {
-    background-color: #FF5722;
-    color: white;
-    border: none;
-    text-align: center;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.btn-mine-exterminator:hover {
-    background-color: #E64A19;
-    transform: scale(1.05);
-}
-
-.btn-mine-exterminator:disabled,
-.btn-mine-exterminator.used {
-    background-color: #78909C;
-    color: #CFD8DC;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-
 .btn-smiley {
     font-size: 30px;
     background-color: #FFD700;
@@ -203,13 +173,26 @@ h1 {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(210, 221, 214, 0.1);
     z-index: 1000;
     display: none;
 }
 
+.btn-dark-mode {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(176, 172, 172, 0.1);
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-dark-mode:hover {
+    background-color: #e0e0e0;
+}
+
 body.dark-mode {
-    background: linear-gradient(to bottom, #2c3e50, #34495e);
+    background: linear-gradient(to bottom, #c6cfd7, #34495e);
     color: #1f6475;
 }
 
@@ -277,8 +260,6 @@ footer {
         border-bottom-width: 140px;
     }
 }
-
-
 
 .sun {
     position: absolute;

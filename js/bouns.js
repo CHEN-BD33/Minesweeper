@@ -1,5 +1,7 @@
 'use strict'
 
+var gRevealedCells
+
 //HINTS//
 function onHintClick(elHint) {
 
@@ -122,64 +124,3 @@ function toggleDarkMode() {
 	document.body.classList.toggle('dark-mode')
 	localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'))
 }
-
-//MINE EXTERMINATIOR//
-function onExterminatorClick(elExterminator) {
-
-	if (!gGame.isOn || isExterminatorOn || isFirstClick) return
-
-	isExterminatorOn = true
-	elExterminator.disabled = true
-	elExterminator.classList.add('used')
-
-	getRandomMines()
-	setMinesNegCount(gBoard)
-
-}
-
-function getMinesCells() {
-
-	const Cells = []
-	for (var i = 0; i < gBoard.length; i++) {
-		for (var j = 0; j < gBoard[0].length; j++) {
-			if (gBoard[i][j].isShown || gBoard[i][j].isMarked) continue
-			if (gBoard[i][j].isMine) {
-				Cells.push({ i, j })
-			}
-		}
-	}
-	if (Cells.length < 3) return null
-
-	return Cells
-}
-
-function getRandomMines() {
-
-	const mineCells = getMinesCells()
-	for (var i = 0; i < 3; i++) {
-		const randomMine = getRandomInt(0, mineCells.length)
-		const cellPos = mineCells.splice(randomMine, 1)[0]
-		gBoard[cellPos.i][cellPos.j].isMine = false
-		gLevel.mines -= 1
-		gGame.remainingMines -= 1
-		renderRemainingMines()
-	}
-
-	console.log(mineCells)
-	console.log(gBoard)
-}
-
-function renderExterminator() {
-
-	const elExterminator = document.querySelector('.btn-mine-exterminator')
-	if (gLevel.id === 1) {
-		elExterminator.style.display = 'none'
-	} else {
-		elExterminator.style.display = 'block'
-		elExterminator.disabled = false
-		elExterminator.classList.remove('used')
-		elExterminator.innerText = '3 Mines Exterminator'
-	}
-}
-
-

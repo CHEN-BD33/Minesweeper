@@ -7,11 +7,8 @@ const SMILEY_NORMAL = '😃'
 const SMILEY_LOSE = '😿'
 const SMILEY_WIN = '🥳'
 
-var gRevealedCells
-
 var isFirstClick
 var isHintOn
-var isExterminatorOn
 
 var gTimerInterval
 
@@ -63,9 +60,6 @@ function onInit() {
 	renderHints()
 
 	renderSafeClicks()
-
-	isExterminatorOn = false
-	renderExterminator()
 
 	closeModal()
 }
@@ -277,12 +271,7 @@ function onChangeDifficulty(id) {
 	for (var i = 0; i < gLevels.length; i++) {
 		if (gLevels[i].id === id) {
 
-			gLevel = {
-				id: gLevels[i].id,
-				size: gLevels[i].size,
-				mines: gLevels[i].mines
-			}
-			break
+			gLevel = gLevels[i]
 		}
 	}
 	onInit()
