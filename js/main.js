@@ -27,6 +27,7 @@ var gGame = {
 	isVictory: false,
 	shownCount: 0,
 	markedCount: 0,
+	remainingMines: 0,
 	secsPassed: 0,
 	lives: 3,
 	hints: 3,
@@ -47,12 +48,14 @@ function onInit() {
 	gGame.lives = 3
 	gGame.hints = 3
 	gGame.safeClick = 3
+	gGame.remainingMines = gLevel.mines
 
 	isFirstClick = true
 
 	renderTimer()
 	clearInterval(gTimerInterval)
 
+	renderRemainingMines()
 	renderLives()
 	renderMsgSmile(SMILEY_NORMAL)
 
@@ -200,18 +203,22 @@ function onCellMarked(event, i, j) {
 	if (!gBoard[i][j].isMarked) {
 		gBoard[i][j].isMarked = true
 		gGame.markedCount++
+		gGame.remainingMines--
 		renderCell({ i, j }, FLAG)
 
 	} else {
 		gBoard[i][j].isMarked = false
 		gGame.markedCount--
+		gGame.remainingMines++
 		renderCell({ i, j }, '')
 	}
+	renderRemainingMines()
+	checkGameOver()
 }
 
 function checkGameOver() {
 
-	if ((gGame.shownCount === gLevel.size ** 2 - gLevel.mines) && (gGame.markedCount === gLevel.mines)) {
+	if ((gGame.shownCount === gLevel.size ** 2 - gLevel.mines) || (gGame.markedCount === gLevel.mines)) {
 		gGame.isVictory = true
 		gameOver()
 	}
@@ -275,6 +282,11 @@ function onChangeDifficulty(id) {
 		}
 	}
 	onInit()
+}
+
+function renderRemainingMines() {
+	const elRemainingMines = document.querySelector('.remaining-mines')
+	elRemainingMines.innerText = `Mines: ${gGame.remainingMines}`
 }
 
 function renderMsgHitMine() {
