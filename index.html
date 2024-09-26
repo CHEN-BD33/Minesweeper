@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Minesweeper</title>
 </head>
 
@@ -26,8 +26,6 @@
             <button onclick="onChangeDifficulty(2)" class="btn-difficulty">Medium</button>
             <button onclick="onChangeDifficulty(3)" class="btn-difficulty">Expert</button>
         </div>
-        <!-- <div button onclick="onManualMode()" class="btn-manual-mode"></div> -->
-
 
         <div class="hint-container">
             <button onclick="onHintClick(this)" class="btn-hint">💡</button>
@@ -36,6 +34,7 @@
         </div>
 
         <div button onclick="onSafeClick(this)" class="btn-safe-click"></div>
+        <div button onclick="onExterminatorClick(this)" class="btn-mine-exterminator"></div>
 
     </div>
 
@@ -46,21 +45,22 @@
             <tbody class="board"></tbody>
         </table>
 
-    <div class="info-container">
-        <div class="timer">Timer</div>
-        <div class="lives">Lives</div>
-        <div class="lives-msg"></div>
+        <div class="info-container">
+            <div class="timer">Timer</div>
+            <div class="lives">Lives</div>
+            <div class="lives-msg"></div>
+        </div>
     </div>
-</div>
 
-<button onclick="toggleDarkMode()" class="btn-dark-mode">🌓Dark\Light Mode</button>
+    <button onclick="toggleDarkMode()" class="btn-dark-mode">🌓Dark\Light Mode</button>
 
     <div class="modal">
         <h2 class="msg"></h2>
     </div>
 
-    <script src="main.js"></script>
-    <script src="util.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/bouns.js"></script>
 </body>
 
 
