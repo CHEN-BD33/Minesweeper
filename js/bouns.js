@@ -160,6 +160,7 @@ function getRandomMines() {
 		const randomMine = getRandomInt(0, mineCells.length)
 		const cellPos = mineCells.splice(randomMine, 1)[0]
 		gBoard[cellPos.i][cellPos.j].isMine = false
+		gGame.remainingMines--
 		gLevel.mines--
 	}
 	console.log(mineCells)
