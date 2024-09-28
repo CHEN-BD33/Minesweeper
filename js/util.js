@@ -23,6 +23,17 @@ function countNeighbors(i, j, board) {
 	return minesAroundCount
 }
 
+function setMinesNegCount(board) {
+
+	for (var i = 0; i < board.length; i++) {
+		for (var j = 0; j < board[0].length; j++) {
+			if (!board[i][j].isMine) {
+				board[i][j].minesAroundCount = countNeighbors(i, j, board)
+			}
+		}
+	}
+}
+
 function openModal(msg) {
 	const elModal = document.querySelector('.modal')
 	const elMsg = elModal.querySelector('.msg')

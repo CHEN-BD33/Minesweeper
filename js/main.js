@@ -9,6 +9,7 @@ const SMILEY_WIN = '🥳'
 
 var isFirstClick
 var isHintOn
+var isExterminatorOn
 
 var gTimerInterval
 
@@ -60,6 +61,9 @@ function onInit() {
 	renderHints()
 
 	renderSafeClicks()
+
+	isExterminatorOn = false
+	renderExterminator()
 
 	closeModal()
 }
@@ -123,17 +127,6 @@ function createMines(board, minesNumber, firstLocation) {
 			board[cellPos.i][cellPos.j].isMine = true
 		} else {
 			i--
-		}
-	}
-}
-
-function setMinesNegCount(board) {
-
-	for (var i = 0; i < board.length; i++) {
-		for (var j = 0; j < board[0].length; j++) {
-			if (!board[i][j].isMine) {
-				board[i][j].minesAroundCount = countNeighbors(i, j, board)
-			}
 		}
 	}
 }

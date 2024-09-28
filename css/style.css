@@ -40,27 +40,6 @@ h1 {
     flex: 1;
 }
 
-.info-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-width: 150px;
-}
-
-.timer,
-.lives,
-.remaining-mines {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.lives-msg {
-    font-weight: bold;
-}
-
 .cell {
     width: 30px;
     height: 30px;
@@ -87,44 +66,11 @@ h1 {
     background-color: #4CAF50;
     color: white;
     border: none;
+    font-weight: bold;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.btn-safe-click {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-difficulty:hover,
-.btn-safe-click:hover {
-    background-color: #45a049;
-}
-
-.btn-smiley {
-    font-size: 30px;
-    background-color: #FFD700;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.btn-smiley:hover {
-    transform: scale(1.1);
 }
 
 .hint-container {
@@ -163,6 +109,91 @@ h1 {
 
 .btn-hint:disabled {
     opacity: 0.5;
+}
+
+.btn-safe-click {
+    background-color: #276629;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-difficulty:hover,
+.btn-safe-click:hover {
+    background-color: #45a049;
+}
+
+.btn-mine-exterminator {
+    background-color: #5151d2;
+    color: white;
+    border: none;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-mine-exterminator:hover {
+    background-color: #616fee;
+    transform: scale(1.05);
+}
+
+.btn-mine-exterminator:disabled,
+.btn-mine-exterminator.active {
+    background-color: #78909C;
+    color: #CFD8DC;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+.btn-smiley {
+    font-size: 30px;
+    background-color: #FFD700;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-smiley:hover {
+    transform: scale(1.1);
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 150px;
+}
+
+.timer,
+.lives,
+.remaining-mines {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.lives-msg {
+    font-weight: bold;
 }
 
 .modal {
